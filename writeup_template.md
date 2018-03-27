@@ -121,6 +121,140 @@ If a well known architecture was chosen:
 * Why did you believe it would be relevant to the traffic sign application?
 * How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
  
+ 
+ 
+ 
+ When adding the gray scale to the color:
+ 
+ EPOCH 1 ...
+Train Accuracy = 0.328
+Validation Accuracy = 0.246
+
+EPOCH 2 ...
+Train Accuracy = 0.529
+Validation Accuracy = 0.439
+
+EPOCH 3 ...
+Train Accuracy = 0.690
+Validation Accuracy = 0.605
+
+EPOCH 4 ...
+Train Accuracy = 0.784
+Validation Accuracy = 0.693
+
+EPOCH 5 ...
+Train Accuracy = 0.841
+Validation Accuracy = 0.746
+
+EPOCH 6 ...
+Train Accuracy = 0.879
+Validation Accuracy = 0.787
+
+EPOCH 7 ...
+Train Accuracy = 0.895
+Validation Accuracy = 0.807
+
+EPOCH 8 ...
+Train Accuracy = 0.919
+Validation Accuracy = 0.827
+
+EPOCH 9 ...
+Train Accuracy = 0.932
+Validation Accuracy = 0.846
+
+EPOCH 10 ...
+Train Accuracy = 0.938
+Validation Accuracy = 0.844
+ 
+ 
+ 
+ 
+ 
+ With color:
+ 
+ EPOCH 1 ...
+Train Accuracy = 0.419
+Validation Accuracy = 0.342
+
+EPOCH 2 ...
+Train Accuracy = 0.595
+Validation Accuracy = 0.521
+
+EPOCH 3 ...
+Train Accuracy = 0.720
+Validation Accuracy = 0.646
+
+EPOCH 4 ...
+Train Accuracy = 0.816
+Validation Accuracy = 0.726
+
+EPOCH 5 ...
+Train Accuracy = 0.871
+Validation Accuracy = 0.773
+
+EPOCH 6 ...
+Train Accuracy = 0.897
+Validation Accuracy = 0.802
+
+EPOCH 7 ...
+Train Accuracy = 0.913
+Validation Accuracy = 0.815
+
+EPOCH 8 ...
+Train Accuracy = 0.927
+Validation Accuracy = 0.831
+
+EPOCH 9 ...
+Train Accuracy = 0.936
+Validation Accuracy = 0.843
+
+EPOCH 10 ...
+Train Accuracy = 0.946
+Validation Accuracy = 0.859
+
+
+
+With gray:
+
+EPOCH 1 ...
+Train Accuracy = 0.242
+Validation Accuracy = 0.202
+
+EPOCH 2 ...
+Train Accuracy = 0.443
+Validation Accuracy = 0.360
+
+EPOCH 3 ...
+Train Accuracy = 0.603
+Validation Accuracy = 0.531
+
+EPOCH 4 ...
+Train Accuracy = 0.732
+Validation Accuracy = 0.656
+
+EPOCH 5 ...
+Train Accuracy = 0.803
+Validation Accuracy = 0.711
+
+EPOCH 6 ...
+Train Accuracy = 0.833
+Validation Accuracy = 0.729
+
+EPOCH 7 ...
+Train Accuracy = 0.865
+Validation Accuracy = 0.767
+
+EPOCH 8 ...
+Train Accuracy = 0.889
+Validation Accuracy = 0.787
+
+EPOCH 9 ...
+Train Accuracy = 0.906
+Validation Accuracy = 0.795
+
+EPOCH 10 ...
+Train Accuracy = 0.918
+Validation Accuracy = 0.815
 
 ### Test a Model on New Images
 
