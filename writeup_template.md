@@ -2,9 +2,8 @@
 
 ## Writeup
 
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
 ---
+This document explains how I solved the problem of training a nueral network to identify German traffic signs. The code is [here](https://github.com/dgard8/Project_2/blob/master/Traffic_Sign_Classifier.ipynb).
 
 **Build a Traffic Sign Recognition Project**
 
@@ -18,89 +17,86 @@ The goals / steps of this project are the following:
 
 
 [//]: # (Image References)
+[training set histogram]: ./writeUpImages/trainDataHistogram.png "Traing set histogram"
+[original image]: ./writeUpImages/originalImage.png "Original Image"
+[generated image]: ./writeUpImages/generatedImage.png "Generated Image"
 
-[image1]: ./examples/visualization.jpg "Visualization"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
-[image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
+[70kmh]: ./downloaded-signs/70kmh.png "70 kmh"
+[120kmh]: ./downloaded-signs/120kmh.jpg "120 kmh"
+[keep right]: ./downloaded-signs/keepRight.jpg "keep right"
+[no passing over tons]: ./downloaded-signs/noPassingOverTons.png "no passing over tons"
+[road narrows on right]: ./downloaded-signs/roadNarrowsOnRight.jpg "road narrows on right"
+[road work]: ./downloaded-signs/roadWork.png "road work"
+[stop]: ./downloaded-signs/stop.png "stop"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
 
 ---
-### Writeup / README
-
-#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
-
-You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
 
 ### Data Set Summary & Exploration
 
-#### 1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
+#### 1. Provide a basic summary of the data set.
 
-I used the pandas library to calculate summary statistics of the traffic
-signs data set:
+I used the numpy library to calculate the following:
 
-* The size of training set is ?
-* The size of the validation set is ?
-* The size of test set is ?
-* The shape of a traffic sign image is ?
-* The number of unique classes/labels in the data set is ?
+* The size of training set is 34799
+* The size of the validation set is 4410
+* The size of test set is 12630
+* The shape of a traffic sign image is (32, 32, 3)
+* The number of unique classes/labels in the data set is 43
 
 #### 2. Include an exploratory visualization of the dataset.
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
+To first thing to do in understanding the dataset it see how many examples there are of each sign. Here a bar graph showing the distribution of images in the training set (the validation and testing set have similar distributions):
 
-![alt text][image1]
+![training set histogram]
+
+I also looked at the distribution of colors for each sign. I averaged the RGB values for each pixel in each image type. I found that most signs had a dominate color. The speed limit signs had more red than anything else and others (like the "right turn only") had more blue. This helped me decide whether or not to grayscale the images.
 
 ### Design and Test a Model Architecture
 
 #### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
-As a first step, I decided to convert the images to grayscale because ...
+I did not grayscale the image. I expiremented with grayscale but it didn't show any improvement over the full color images, so I left the images in full color.
 
-Here is an example of a traffic sign image before and after grayscaling.
+I normalized the image data by subrtracing and dividing each pixel by 128. This causes the values to be between -1 and 1, which gives approximately zero mean. Normalizing the data helps the nueral network not have to deal with large biases.
 
-![alt text][image2]
+Looking at the distribution of image types it was easy to see that there were a lot more examples of some signs than others. To make up for this, I generated extra images until each sign had an equal number of examples.
 
-As a last step, I normalized the image data because ...
-
-I decided to generate additional data because ... 
-
-To add more data to the the data set, I used the following techniques because ... 
+To generate the extra images, I took a random example of the sign and rotated it a random number of degress between -20 and 20.
 
 Here is an example of an original image and an augmented image:
 
-![alt text][image3]
+![original image]
+![generated image]
 
-The difference between the original data set and the augmented data set is the following ... 
+The augmented data set contains 86430 images, more than twice the original amount.
 
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
-My final model consisted of the following layers:
+I used the Lenet architecture for my network. My final model consisted of the following layers:
 
 | Layer         		|     Description	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
+| Convolution 3x3     	|   1x1 stride, same padding, outputs 28x28x16 	|
 | RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
+| Max pooling	      	| 2x2 stride,  outputs 14x14x16 				|
+| Convolution 3x3     	|   1x1 stride, same padding, outputs 10x10x32 	|
+| RELU					|												|
+| Max pooling	      	| 2x2 stride,  outputs 5x5x32 					|
+| Fully connected		| output 120   									|
+| Fully connected		| output 84   									|
+| Fully connected		| output 43   									|
+| Softmax				|         										|
  
 
 
 #### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
-To train the model, I used an ....
+To train the model, I used the Adam Optimizer to minimize the mean of the cross entropy loss. I used a batch size of 128. I originally had a learning rate of 0.0001, but I found a rate of 0.001 worked to get the same accuracy with fewer epochs. The network's accuracy stopped improving after around 7 epochs.
 
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
@@ -109,161 +105,26 @@ My final model results were:
 * validation set accuracy of ? 
 * test set accuracy of ?
 
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
+I began with the basic Lenet architecture. This architecture is known to work well with images. The convolution layers allow the network to pick up on finer details as well as large features of the image. This network did well with the initial training set, but was unable to get above 90% accuracy. Also, it shows signficant overfitting with the training accuracy about 10% higher than the validation accuracy.
 
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
+To combat the overfitting, I added dropout to the network. Each convolution layer has a dropout rate of 20% and each fully connected layer has a dropout rate of 50%. This prevented the model from memorizing the training set, and helped with the overfitting, but hurt the overall accuracy a little bit.
+
+The biggest help to getting a high enough accuracy was augmenting the dataset as described previously. Doing so increased the accuracy by almost 10% and decreased the gap between the training and validation accuracy. There is still some overfitting but the gap is now only about 5%.
+
+Further improvements could be made to the network to improve accuracy, such as adding extra layers. But any additional layers would add more parameters and likely increase the overfitting problem. Likely, what would help the most is more refined techniques for data augmentation (adding in noise, shifting the image, etc).
+
  
- 
- 
- 
- When adding the gray scale to the color:
- 
- EPOCH 1 ...
-Train Accuracy = 0.328
-Validation Accuracy = 0.246
-
-EPOCH 2 ...
-Train Accuracy = 0.529
-Validation Accuracy = 0.439
-
-EPOCH 3 ...
-Train Accuracy = 0.690
-Validation Accuracy = 0.605
-
-EPOCH 4 ...
-Train Accuracy = 0.784
-Validation Accuracy = 0.693
-
-EPOCH 5 ...
-Train Accuracy = 0.841
-Validation Accuracy = 0.746
-
-EPOCH 6 ...
-Train Accuracy = 0.879
-Validation Accuracy = 0.787
-
-EPOCH 7 ...
-Train Accuracy = 0.895
-Validation Accuracy = 0.807
-
-EPOCH 8 ...
-Train Accuracy = 0.919
-Validation Accuracy = 0.827
-
-EPOCH 9 ...
-Train Accuracy = 0.932
-Validation Accuracy = 0.846
-
-EPOCH 10 ...
-Train Accuracy = 0.938
-Validation Accuracy = 0.844
- 
- 
- 
- 
- 
- With color:
- 
- EPOCH 1 ...
-Train Accuracy = 0.419
-Validation Accuracy = 0.342
-
-EPOCH 2 ...
-Train Accuracy = 0.595
-Validation Accuracy = 0.521
-
-EPOCH 3 ...
-Train Accuracy = 0.720
-Validation Accuracy = 0.646
-
-EPOCH 4 ...
-Train Accuracy = 0.816
-Validation Accuracy = 0.726
-
-EPOCH 5 ...
-Train Accuracy = 0.871
-Validation Accuracy = 0.773
-
-EPOCH 6 ...
-Train Accuracy = 0.897
-Validation Accuracy = 0.802
-
-EPOCH 7 ...
-Train Accuracy = 0.913
-Validation Accuracy = 0.815
-
-EPOCH 8 ...
-Train Accuracy = 0.927
-Validation Accuracy = 0.831
-
-EPOCH 9 ...
-Train Accuracy = 0.936
-Validation Accuracy = 0.843
-
-EPOCH 10 ...
-Train Accuracy = 0.946
-Validation Accuracy = 0.859
-
-
-
-With gray:
-
-EPOCH 1 ...
-Train Accuracy = 0.242
-Validation Accuracy = 0.202
-
-EPOCH 2 ...
-Train Accuracy = 0.443
-Validation Accuracy = 0.360
-
-EPOCH 3 ...
-Train Accuracy = 0.603
-Validation Accuracy = 0.531
-
-EPOCH 4 ...
-Train Accuracy = 0.732
-Validation Accuracy = 0.656
-
-EPOCH 5 ...
-Train Accuracy = 0.803
-Validation Accuracy = 0.711
-
-EPOCH 6 ...
-Train Accuracy = 0.833
-Validation Accuracy = 0.729
-
-EPOCH 7 ...
-Train Accuracy = 0.865
-Validation Accuracy = 0.767
-
-EPOCH 8 ...
-Train Accuracy = 0.889
-Validation Accuracy = 0.787
-
-EPOCH 9 ...
-Train Accuracy = 0.906
-Validation Accuracy = 0.795
-
-EPOCH 10 ...
-Train Accuracy = 0.918
-Validation Accuracy = 0.815
-
 ### Test a Model on New Images
 
 #### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
 Here are five German traffic signs that I found on the web:
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
+![70 kmh](./downloaded-signs/70kmh.png)
+<!-- .img style="width: 100" -->
+![120kmh] ![keep right] ![stop]
+![no passing over tons] ![road narrows on right] ![road work]
+
 
 The first image might be difficult to classify because ...
 
@@ -298,8 +159,5 @@ For the first image, the model is relatively sure that this is a stop sign (prob
 
 
 For the second image ... 
-
-### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-#### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
 
 
