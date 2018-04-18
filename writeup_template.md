@@ -121,14 +121,12 @@ Further improvements could be made to the network to improve accuracy, such as a
 Here are five German traffic signs that I found on the web:
 
 <img src="https://github.com/dgard8/Project_2/blob/master/downloaded-signs/70kmh.png" width="120">
-<img src="https://github.com/dgard8/Project_2/blob/master/downloaded-signs/120kmh.jpg" width="120">
+<img src="https://github.com/dgard8/Project_2/blob/master/downloaded-signs/120km.jpg" width="120">
 <img src="https://github.com/dgard8/Project_2/blob/master/downloaded-signs/keepRight.jpg" width="120">
 <img src="https://github.com/dgard8/Project_2/blob/master/downloaded-signs/noPassingOverTons.png" width="120">
 <img src="https://github.com/dgard8/Project_2/blob/master/downloaded-signs/roadNarrowsOnRight.jpg" width="120">
 <img src="https://github.com/dgard8/Project_2/blob/master/downloaded-signs/roadWork.png" width="120">
-<img src="https://github.com/dgard8/Project_2/blob/master/downloaded-signs/stoppng" width="120">
-![120kmh] ![keep right] ![stop]
-![no passing over tons] ![road narrows on right] ![road work]
+<img src="https://github.com/dgard8/Project_2/blob/master/downloaded-signs/stop.png" width="120">
 
 
 The first image might be difficult to classify because ...
