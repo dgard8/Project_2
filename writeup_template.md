@@ -120,8 +120,7 @@ Further improvements could be made to the network to improve accuracy, such as a
 
 Here are five German traffic signs that I found on the web:
 
-![70 kmh](./downloaded-signs/70kmh.png)
-<!-- .img style="width: 100" -->
+<img src="https://github.com/dgard8/Project_2/blob/master/downloaded-signs/70kmh.png" width="48">
 ![120kmh] ![keep right] ![stop]
 ![no passing over tons] ![road narrows on right] ![road work]
 
