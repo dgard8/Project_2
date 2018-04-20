@@ -29,14 +29,11 @@ The goals / steps of this project are the following:
 [road work]: ./downloaded-signs/roadWork.png "road work"
 [stop]: ./downloaded-signs/stop.png "stop"
 
-## Rubric Points
-### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
-
 ---
 
 ### Data Set Summary & Exploration
 
-#### 1. Provide a basic summary of the data set.
+#### 1. Data Set
 
 I used the numpy library to calculate the following:
 
@@ -46,9 +43,9 @@ I used the numpy library to calculate the following:
 * The shape of a traffic sign image is (32, 32, 3)
 * The number of unique classes/labels in the data set is 43
 
-#### 2. Include an exploratory visualization of the dataset.
+#### 2. Visualize the dataset
 
-To first thing to do in understanding the dataset it see how many examples there are of each sign. Here a bar graph showing the distribution of images in the training set (the validation and testing set have similar distributions):
+To first thing to do in understanding the dataset is to see how many examples there are of each sign. Here is a bar graph showing the distribution of images in the training set (the validation and testing set have similar distributions):
 
 ![training set histogram]
 
@@ -56,7 +53,7 @@ I also looked at the distribution of colors for each sign. I averaged the RGB va
 
 ### Design and Test a Model Architecture
 
-#### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
+#### 1. Pre-processing the data
 
 I did not grayscale the image. I expiremented with grayscale but it didn't show any improvement over the full color images, so I left the images in full color.
 
@@ -74,7 +71,7 @@ Here is an example of an original image and an augmented image:
 The augmented data set contains 86430 images, more than twice the original amount.
 
 
-#### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
+#### 2. Model Architecture
 
 I used the Lenet architecture for my network. My final model consisted of the following layers:
 
@@ -94,16 +91,16 @@ I used the Lenet architecture for my network. My final model consisted of the fo
  
 
 
-#### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
+#### 3. Training Parameters
 
 To train the model, I used the Adam Optimizer to minimize the mean of the cross entropy loss. I used a batch size of 128. I originally had a learning rate of 0.0001, but I found a rate of 0.001 worked to get the same accuracy with fewer epochs. The network's accuracy stopped improving after around 7 epochs.
 
-#### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
+#### 4. Solution
 
 My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
+* training set accuracy of 0.991
+* validation set accuracy of 0.955
+* test set accuracy of 0.917
 
 I began with the basic Lenet architecture. This architecture is known to work well with images. The convolution layers allow the network to pick up on finer details as well as large features of the image. This network did well with the initial training set, but was unable to get above 90% accuracy. Also, it shows signficant overfitting with the training accuracy about 10% higher than the validation accuracy.
 
@@ -116,51 +113,85 @@ Further improvements could be made to the network to improve accuracy, such as a
  
 ### Test a Model on New Images
 
-#### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
+#### 1. Images found on the internet
 
 Here are five German traffic signs that I found on the web:
 
 <img src="https://github.com/dgard8/Project_2/blob/master/downloaded-signs/70kmh.png" width="120">
 <img src="https://github.com/dgard8/Project_2/blob/master/downloaded-signs/120km.jpg" width="120">
 <img src="https://github.com/dgard8/Project_2/blob/master/downloaded-signs/keepRight.jpg" width="120">
+<img src="https://github.com/dgard8/Project_2/blob/master/downloaded-signs/stop.png" width="120">
 <img src="https://github.com/dgard8/Project_2/blob/master/downloaded-signs/noPassingOverTons.png" width="120">
 <img src="https://github.com/dgard8/Project_2/blob/master/downloaded-signs/roadNarrowsOnRight.jpg" width="120">
 <img src="https://github.com/dgard8/Project_2/blob/master/downloaded-signs/roadWork.png" width="120">
-<img src="https://github.com/dgard8/Project_2/blob/master/downloaded-signs/stop.png" width="120">
 
 
-The first image might be difficult to classify because ...
+I cropped out just the sign and converted them to 32x32 images. The last three might be hard for the network to classify because they aren't actually pictures of signs; the sign is the entire image. The network was trained on pictures where the sign doesn't take up the whole image.
 
-#### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
+#### 2. Internet image accuracy
 
 Here are the results of the prediction:
 
 | Image			        |     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| 70 km/h      			| No passing   									| 
+| 120 km/h      		| Speed limit (100km/h) 						|
+| Keep Right			| Keep Right									|
+| Stop	      			| Speed limit (70km/h)							|
+| No passing over 3.3 tons| No passing      							|
+| Road Narrows on Right	| General caution					 			|
+| Road Work	      		| No passing					 				|
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was only able to correctly guess 1 of the 7 traffic signs, which gives an accuracy of 14%. This does not compare very well to the accuracy of the test data and suggests severe overfitting. Or that the images used for training were not representative of the images I found on the internet.
 
-#### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
+Interestingly, my network seems to prefer to suggest No passing. it gave that answer for three of my internet images, none of which were No passing signs.
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
+During one of my earlier tests I did manage to get 5 of the 7 correct. But for some reason I can't reproduce that result.
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+#### 3. Probabilities for the internet images
+
+For four of the images, the network is very unsure of the answer, with the highest probability at or below 10%. Here are the numbers for the 70 km/h sign:
 
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+| .086         			| No passing   									| 
+| .068     				| Speed limit (70km/h) 							|
+| .059					| Speed limit (80km/h)							|
+| .055	      			| Dangerous curve to the left					|
+| .054				    | No passing for vehicles over 3.5 metric tons  |
+
+##### Road narrows on right
+For the "Road narrows on the right" sign, the network is very confident of its answer. But the answer is wrong, which is worse than being unsure. In all of my testing, this sign always had an almost 100% confidence in the wrong answer; it is unclear why. Here are the numbers:
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| .999         			| General caution   									| 
+| .0006     			| Pedestrians 							|
+| .0001					| Traffic signals							|
+| .000002	      		| Right-of-way at the next intersection			|
+| .00000008				 | Road narrows on the right  |
 
 
-For the second image ... 
+##### Keep right
+For the "Keep right" sign, the network is very confident of its answer. This time the answer is correct. Here are the numbers:
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| .999         			| Keep right   									| 
+| .00003     				| Turn left ahead 							|
+| .00000004					| Go straight or right							|
+| .0000000001	      			| Roundabout mandatory					|
+| .0000000001				    | Ahead only  |
 
 
+##### 120 km/h
+For the 120 km/h speed limit sign, the network is decently confident, but is wrong. It thinks the sign is for 100 km/h, and all the top five are for speed limit signs. Here are the numbers:
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| .76         			| Speed limit (100km/h)  									| 
+| .20     				| Speed limit (120km/h) 							|
+| .04					| Speed limit (80km/h)							|
+| .002	      			| Speed limit (70km/h)					|
+| .001				    | Speed limit (30km/h)  |
